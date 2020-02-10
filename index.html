@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <title>Boolflix</title>
+
+  </head>
+  <body>
+    <div class="searchZone">
+      <input id="searchBar" type="text" name="" value="" placeholder="Inserisci un film da cercare:">
+      <button type="button" id="searchBtn"></button>
+    </div>
+
+
+    <ul class="covers"></ul>
+    <script id="film-template" type="text/x-handlebars-template"><li>{{title}} = {{original_title}} = {{original_language}} = {{vote_average}}</li></script>
+    <script src="js/script.js" charset="utf-8"></script>
+
+  </body>
+</html>
