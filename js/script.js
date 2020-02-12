@@ -4,22 +4,22 @@ $(document).ready(function () {
     var query = $('#searchBar').val();
     cleanSearch();
     ajaxGetMovie(query);
+    ajaxGetTVseries(query);
   })
   // keypress
   $('#searchBar').keypress(function(event) {
     if (event.which == 13) {
       var query = $('#searchBar').val();
       cleanSearch();
+      addContainer();
       ajaxGetMovie(query);
+      ajaxGetTVseries(query);
     }
   })
-  
+
 });
 
-function cleanSearch() {
-  $('.covers').html('');
-  $('#searchBar').val('');
-}
+// F U N Z I O N I //
 
 function ajaxGetMovie(string) {
   var url = 'https://api.themoviedb.org/3/search/movie';
@@ -34,9 +34,16 @@ function ajaxGetMovie(string) {
       language: 'it-IT'
     },
     success: function (data) {
-      var movie = data.results;
-      console.log(movie);
-      printMovie(movie);
+      // controllo risultato ricerca
+      if (data.total_results > 0) {
+        var movie = data.results;
+        printResearch('Film', movie);
+      }
+      //
+      else {
+        cleanSearch();
+        noReturn($('.movies'));
+      }
     },
     error: function (request, state, errors) {
       console.log(errors);
@@ -44,24 +51,133 @@ function ajaxGetMovie(string) {
   });
 }
 
+function ajaxGetTVseries(string) {
+  var url = 'https://api.themoviedb.org/3/search/tv';
+  var api_key = '3f9e54b15da66f4097aa9e87583c6db8';
 
+  $.ajax({
+    url: url,
+    method: 'GET',
+    data: {
+      api_key: api_key,
+      query: string,
+      language: 'it-IT'
+    },
+    success: function (data) {
+      // controllo risultato ricerca
+      if (data.total_results > 0) {
+        var series = data.results;
+        printResearch('Serie TV', series);
+      }
+      //
+      else {
+        noReturn($('.tvSeries'));
+      }
+    },
+    error: function (request, state, errors) {
+      console.log(errors);
+    }
+  });
+}
 
-function printMovie(movie) {
+function printResearch(type, results) {
 
   var source = $('#film-template').html();
   var template = Handlebars.compile(source);
+  var title;
+  var original_title;
 
-  for (var i = 0; i < movie.length; i++) {
-    var thisMovie = movie[i];
-    console.log(thisMovie);
+  for (var i = 0; i < results.length; i++) {
+    var thisResult = results[i];
+    // verifica serie/film
+    if (type == 'Film') {
+      title = thisResult.title;
+      original_title = thisResult.original_title;
+      var videoType = $('.movies');
+    }
+    else if (type == 'Serie TV') {
+      title = thisResult.name;
+      original_title = thisResult.original_name;
+      var videoType = $('.tvSeries');
+    }
+    // // // // // // // //
 
     var context = {
-      title: thisMovie.title,
-      original_title: thisMovie.original_title,
-      original_language: thisMovie.original_language,
-      vote_average: thisMovie.vote_average,
+      type: type,
+      title: title,
+      original_title: original_title,
+      original_language: languageFlag(thisResult.original_language),
+      vote_average: starsRate(thisResult.vote_average),
+      poster: posterPrint(thisResult.poster_path),
     };
     var html = template(context);
-    $('.covers').append(html);
+    videoType.append(html);
   }
 }
+
+function posterPrint(poster_path, title) {
+  var posterImg;
+  var urlPosterImg = 'https://image.tmdb.org/t/p/w185';
+  if (poster_path == null) {
+    posterImg = '<img class="posterImg" src="img/default-img.png">';
+  }
+  else {
+    posterImg = '<img src="'+ urlPosterImg + poster_path +'">';
+  }
+  return posterImg;
+}
+
+function noReturn(videoType) {
+  var source = $('#noReturn-template').html();
+  var template = Handlebars.compile(source);
+  var html = template();
+  videoType.append(html);
+}
+
+function cleanSearch() {
+  $('.movies').html('');
+  $('.tvSeries').html('');
+  $('#searchBar').val('');
+}
+
+function starsRate(number){
+  number = Math.ceil(number / 2);
+  var string = '';
+
+  for (var i = 1; i <= 5; i++) {
+    if (i <= number) {
+      string += '<i class="fas fa-star"></i>';
+    } else {
+      string += '<i class="far fa-star"></i>';
+    }
+  }
+  return string;
+}
+
+function languageFlag(string){
+  var flagAvailable = [
+    'en',
+    'it'
+  ];
+   if (flagAvailable.includes(string)) {
+      string = '<img class="languageImg" src="img/' + string + '.svg">';
+   }
+
+  return string;
+}
+
+function addContainer() {
+  $('#searchList').empty()
+  $('#searchList').append('<h2>Film:</h2>', '<ul id="mainList" class="movies"></ul>');
+  $('#searchList').append('<h2>Serie tv:</h2>', '<ul id="mainList" class="tvSeries"></ul>');
+}
+
+
+
+
+
+
+
+///////////DOMANDE//////////
+
+// come posso organizzare uno slider manuale per gli elementi di ricerca?  (tenendo conto del numero dei risultati e organizzarne max 4 per pagina)
