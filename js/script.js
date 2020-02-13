@@ -42,7 +42,7 @@ function ajaxGetMovie(string) {
       }
       //
       else {
-        
+
         noReturn($('.movies'));
       }
     },
@@ -111,7 +111,7 @@ function printResearch(type, results) {
       original_language: languageFlag(thisResult.original_language),
       vote_average: starsRate(thisResult.vote_average),
       poster: posterPrint(thisResult.poster_path),
-      // overview: printOverview(thisResult.overview)
+      overview: printOverview(thisResult.overview)
     };
     var html = template(context);
     videoType.append(html);
@@ -120,12 +120,7 @@ function printResearch(type, results) {
 
 function printOverview(overview){
   var overviewText;
-  if (overview == null) {
-    overviewText = '<p>Non è presente una trama per questo titolo</p>';
-  }
-  else {
-    overviewText = '<p>'+ overview +'</p>';
-  }
+  overviewText = overview;
   return overviewText;
 }
 
@@ -182,8 +177,15 @@ function languageFlag(string){
   return string;
 }
 
+function getSrcWord(){
+  var srcWord = $('#searchBar').val();
+  return srcWord;
+  console.log(srcWord);
+}
+
 function addContainer() {
   $('#searchList').empty()
+  $('#searchList').append('<h2 id="srcWord">Risultati per: ""</h2>')
   $('#searchList').append('<h2>Film:</h2>', '<div id="mainList" class="movies"></div>');
   $('#searchList').append('<h2>Serie tv:</h2>', '<div id="mainList" class="tvSeries"></div>');
 }
