@@ -18,6 +18,10 @@ h2{
   font-weight: 300;
   color: #ff9900;
 }
+h3{
+  color: #8700ff;
+  font-weight: 300;
+}
 h5{
   font-weight: 300;
   margin: 2px;
@@ -112,7 +116,6 @@ h5, h4{
 }
 
 
-
 /*// // // // // //  H O V E R  // // // // // //*/
 .mainSearch:hover{
   padding: 3px 5px 3px 5px;
@@ -124,7 +127,7 @@ h5, h4{
   transition: 0.3s;
 }
 .info:hover{
-  color: rgba(255, 255, 255, 1.0);
+  color: #FFF;
   background-color: rgba(0, 0, 0, 0.7);
   transition: 0.3s;
 }

@@ -3,6 +3,7 @@ $(document).ready(function () {
   $('#searchBtn').click(function() {
     var query = $('#searchBar').val();
     cleanSearch();
+    addContainer();
     ajaxGetMovie(query);
     ajaxGetTVseries(query);
   })
@@ -31,7 +32,7 @@ function ajaxGetMovie(string) {
     data: {
       api_key: api_key,
       query: string,
-      language: 'it-IT'
+      language: 'it-IT',
     },
     success: function (data) {
       // controllo risultato ricerca
@@ -41,7 +42,7 @@ function ajaxGetMovie(string) {
       }
       //
       else {
-        cleanSearch();
+        
         noReturn($('.movies'));
       }
     },
@@ -61,7 +62,7 @@ function ajaxGetTVseries(string) {
     data: {
       api_key: api_key,
       query: string,
-      language: 'it-IT'
+      language: 'it-IT',
     },
     success: function (data) {
       // controllo risultato ricerca
@@ -71,6 +72,7 @@ function ajaxGetTVseries(string) {
       }
       //
       else {
+
         noReturn($('.tvSeries'));
       }
     },
@@ -109,10 +111,22 @@ function printResearch(type, results) {
       original_language: languageFlag(thisResult.original_language),
       vote_average: starsRate(thisResult.vote_average),
       poster: posterPrint(thisResult.poster_path),
+      // overview: printOverview(thisResult.overview)
     };
     var html = template(context);
     videoType.append(html);
   }
+}
+
+function printOverview(overview){
+  var overviewText;
+  if (overview == null) {
+    overviewText = '<p>Non è presente una trama per questo titolo</p>';
+  }
+  else {
+    overviewText = '<p>'+ overview +'</p>';
+  }
+  return overviewText;
 }
 
 function posterPrint(poster_path, title) {

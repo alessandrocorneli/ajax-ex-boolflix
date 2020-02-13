@@ -17,6 +17,8 @@
   <body>
     <div id="header">
       <h1>BOOLFLIX</h1>
+      <!-- Aggiungere un bottone per refreshare alla pressione sul titolo-->
+      <!-- aggiungere il menu principale pre/ricerca -->
       <div class="searchZone">
         <div class="mainSearch">
           <input id="searchBar" type="text" name="" value="" placeholder="Inserisci un film da cercare:">
@@ -43,13 +45,15 @@
           <h5>Titolo originale: {{original_title}}</h5>
           <h5>Lingua originale: {{{original_language}}}</h5>
           <h5>Voto: {{{vote_average}}}</h5>
+          {{{overview}}}
+          <!-- aggiungere un bottone per mostrare/nascondere le overview -->
         </div>
       </div>
 
     </script>
 
     <script id="noReturn-template" type="text/x-handlebars-template">
-    <li>Non esistono risultati di questa tipologia corrispondenti alla ricerca.</li></script>
+    <h3>Non esistono risultati di questa tipologia corrispondenti alla ricerca.</h3></script>
 
 
 
