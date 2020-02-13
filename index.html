@@ -33,14 +33,18 @@
     <!-- // -->
 
     <script id="film-template" type="text/x-handlebars-template">
-        <ul id="secondList">
-          {{title}}
-          <li>{{{poster}}}</li>
-          <li>Tipologia: {{type}}</li>
-          <li>Titolo originale: {{original_title}}</li>
-          <li>Lingua originale: {{{original_language}}}</li>
-          <li>Voto: {{{vote_average}}}</li>
-        </ul>
+      <div class="wrap">
+        <div class="posterImg">
+          {{{poster}}}
+        </div>
+        <div class="info">
+          <h4>{{title}}</h4>
+          <h5>Tipologia: {{type}}</h5>
+          <h5>Titolo originale: {{original_title}}</h5>
+          <h5>Lingua originale: {{{original_language}}}</h5>
+          <h5>Voto: {{{vote_average}}}</h5>
+        </div>
+      </div>
 
     </script>
 

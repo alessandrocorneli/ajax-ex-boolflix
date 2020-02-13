@@ -159,17 +159,19 @@ function languageFlag(string){
     'en',
     'it'
   ];
-   if (flagAvailable.includes(string)) {
-      string = '<img class="languageImg" src="img/' + string + '.svg">';
-   }
+  // per preferenza, niente bandiera O.o //
+
+   // if (flagAvailable.includes(string)) {
+   //    string = '<img class="languageImg" src="img/' + string + '.svg">';
+   // }
 
   return string;
 }
 
 function addContainer() {
   $('#searchList').empty()
-  $('#searchList').append('<h2>Film:</h2>', '<ul id="mainList" class="movies"></ul>');
-  $('#searchList').append('<h2>Serie tv:</h2>', '<ul id="mainList" class="tvSeries"></ul>');
+  $('#searchList').append('<h2>Film:</h2>', '<div id="mainList" class="movies"></div>');
+  $('#searchList').append('<h2>Serie tv:</h2>', '<div id="mainList" class="tvSeries"></div>');
 }
 
 
